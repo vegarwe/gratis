@@ -1,7 +1,7 @@
 #!/bin/sh
 # generate images
 
-suffix=_2_0.xbm
+suffix=_2_7.xbm
 prefix=Sketches/libraries/Images/
 out=.20
 

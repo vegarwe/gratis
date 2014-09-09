@@ -37,16 +37,16 @@
 #include <SPI.h>
 #include <FLASH.h>
 #include <EPD2.h>
-#include <S5813A.h>
-
+#include <Wire.h>
+#include <LM75.h>
 
 // Change this for different display size
 // supported sizes: 144 200 270
-#define SCREEN_SIZE 0
+#define SCREEN_SIZE 270
 
-// select two images from:  text_image text-hello cat aphrodite venus saturn
-#define IMAGE_1  text_image
-#define IMAGE_2  cat
+// select two images from:  text_image ea cat aphrodite venus saturn
+#define IMAGE_1  ea
+#define IMAGE_2  text_image
 
 // set up images from screen size2
 #if (SCREEN_SIZE == 144)
@@ -120,26 +120,27 @@ PROGMEM const
 #if defined(__MSP430_CPU__)
 
 // TI LaunchPad IO layout
-const int Pin_TEMPERATURE = A4;
-const int Pin_PANEL_ON = P2_3;
-const int Pin_BORDER = P2_5;
-const int Pin_DISCHARGE = P2_4;
-const int Pin_PWM = P2_1;
-const int Pin_RESET = P2_2;
-const int Pin_BUSY = P2_0;
-const int Pin_EPD_CS = P2_6;
-const int Pin_FLASH_CS = P2_7;
-const int Pin_SW2 = P1_3;
-const int Pin_RED_LED = P1_0;
+#error TI LaunchPad not tested
+//const int Pin_TEMPERATURE = A4;
+//const int Pin_PANEL_ON = P2_3;
+//const int Pin_BORDER = P2_5;
+//const int Pin_DISCHARGE = P2_4;
+//const int Pin_PWM = P2_1;
+//const int Pin_RESET = P2_2;
+//const int Pin_BUSY = P2_0;
+//const int Pin_EPD_CS = P2_6;
+//const int Pin_FLASH_CS = P2_7;
+//const int Pin_SW2 = P1_3;
+//const int Pin_RED_LED = P1_0;
 
 #else
 
 // Arduino IO layout
-const int Pin_TEMPERATURE = A0;
-const int Pin_PANEL_ON = 2;
-const int Pin_BORDER = 3;
+//const int Pin_TEMPERATURE = A0; // Temperature is handled by LM75 over I2C and not an analog pin
+const int Pin_PANEL_ON = 5;
+const int Pin_BORDER = 10;
 const int Pin_DISCHARGE = 4;
-const int Pin_PWM = 5;
+//const int Pin_PWM = 5;    // Not used by COG v2
 const int Pin_RESET = 6;
 const int Pin_BUSY = 7;
 const int Pin_EPD_CS = 8;
@@ -164,8 +165,8 @@ EPD_Class EPD(EPD_SIZE, Pin_PANEL_ON, Pin_BORDER, Pin_DISCHARGE, Pin_RESET, Pin_
 void setup() {
 	pinMode(Pin_RED_LED, OUTPUT);
 	pinMode(Pin_SW2, INPUT);
-	pinMode(Pin_TEMPERATURE, INPUT);
-	pinMode(Pin_PWM, OUTPUT);
+	//pinMode(Pin_TEMPERATURE, INPUT);
+	//pinMode(Pin_PWM, OUTPUT);
 	pinMode(Pin_BUSY, INPUT);
 	pinMode(Pin_RESET, OUTPUT);
 	pinMode(Pin_PANEL_ON, OUTPUT);
@@ -175,7 +176,7 @@ void setup() {
 	pinMode(Pin_FLASH_CS, OUTPUT);
 
 	digitalWrite(Pin_RED_LED, LOW);
-	digitalWrite(Pin_PWM, LOW);  // not actually used - set low so can use current eval board unmodified
+	//digitalWrite(Pin_PWM, LOW);  // not actually used - set low so can use current eval board unmodified
 	digitalWrite(Pin_RESET, LOW);
 	digitalWrite(Pin_PANEL_ON, LOW);
 	digitalWrite(Pin_DISCHARGE, LOW);
@@ -211,7 +212,8 @@ void setup() {
 	}
 
 	// configure temperature sensor
-	S5813A.begin(Pin_TEMPERATURE);
+	Wire.begin();
+	LM75.begin();
 }
 
 
@@ -220,7 +222,7 @@ static int state = 0;
 
 // main loop
 void loop() {
-	int temperature = S5813A.read();
+	int temperature = LM75.read();
 	Serial.print("Temperature = ");
 	Serial.print(temperature);
 	Serial.println(" Celcius");

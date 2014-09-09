@@ -2,6 +2,12 @@
 
 # Code
 
+This project officially supports the Arduino-based platform. The Ti LaunchPad suppor that is 
+available in the original [repaper/gratis]((https://github.com/repaper/gratis) repository 
+has been commented out and is completely untested.
+
+The examples have been verified on Arduino Leonardo (R3) and Arduino Uno (R2) boards using
+the 1.0.5 version of the IDE.
 
 ## Source Code Repository
 
@@ -12,7 +18,7 @@ The source code to the Repaper software is hosted by
 
 ## Development Tools
 
-This project officially supports both the Arduino-based and Ti LaunchPad platforms.
+This project officially supports the Arduino-based platform.
 
 ### Arduino
 
@@ -22,25 +28,13 @@ Windows, Mac OS/X and other operating systems.
 Note: [Java](http://java.com) is necessary to run the GUI, but it is
 possible to install a command line only version.
 
-### TI LaunchPad
-
-The [Energia](http://energia.nu/) IDE can be downloaded from their
-[Home Page](http://energia.nu/), Windows, Mac OS/X and Linux are
-supported and this needs [Java](http://java.com) to be installed.
-
-
 # Example Programs
 
 **IMPORTANT NOTES for COG V2**
 
-1. The programs below only support the COG V1 using the `EPD` library.
-2. There is preliminary support for COG V2 by the `EPD2` and `EPD2_GFX` libraries
-   since the driving sequence is very different.
-3. There are initial translations of `demo` into `demo2`,
-   also `command2`, `flash_loader2` and `thermo2` from corresponding originals.
-4. The COG V2 can be used with current extension board
-5. The COG V2 does not use PWM - this can be disconnected from
-   the LaunchPad/Arduino.
+1. The programs below only support the COG V2 using the `EPD2` library.
+2. The COG V2 does not use PWM - the pin is used as chip select for the
+   onboard SPI-NOR flash instead.
 
 ---
 
@@ -130,53 +124,6 @@ this program has two modes of operation:
    can be displayed by this program
 
 
-## Thermo Sketch (Arduino Mega only)
-
-> Link to the [thermo source](https://github.com/repaper/gratis/tree/master/Sketches/thermo).
-
-A frame buffer graphic demo uses 4800 bytes of SRAM for 2.0" display
-so is restricted to Arduino Mega or ATmega1280/ATmega2560 chip
-designs.  It draws a temperature display in digits and a simple
-scale plus a few graphic elements.  Delays for a minute then refreshes
-the display.
-
-
-## Amslide Sketch (AlaMode)
-
-> Link to the [amslide source](https://github.com/repaper/gratis/tree/master/Sketches/amslide).
-
-A demonstration slide show for the 2.0" display connected to a
-[Wyolum](http://www.wyolum.com)
-[AlaMode](http://wyolum.com/projects/alamode/).  This is basically an
-Arduino Uno (ATMega328) type of device that can be connected directly
-to a Raspberry-Pi and programmed from the Arduino IDE running on a
-Raspberry-Pi (see the Wyolum web sit to [get started](http://wyolum.com/projects/alamode/alamode-getting-started/).
-
-This demo simply displays images from a card in the AlaMode microSD
-slot; a file `index.txt` lists the files to be displayed and how many
-seconds to display the image.  The format is that each line has the
-number of seconds as a decimal integer, a space and the image file
-path.
-
-The images are binary files that match the display, there is a zip
-file containing some demo images and a sample `index.txt`.  Just unzip
-this file to the root of a micro SD card, download the amdemo.ino and
-the images will be displayed continuously. When the serial monitor is
-running the names of the files will be displayed.
-
-The images in the sample are derived from the XBM library images using
-the Command: `tail -n +4 "${xbm}" | xxd -r -p > "${bin}"` Where the
-variables `xbm` represents the XBM source file and `bin`
-represents the binary output file name.  This results in the bytes in
-the binary file having the same values as the hex numbers in the XBM
-file.  Note that the Arduino SD code uses the 8.3 file name format so
-choose a compatible name e.g. `cat.20`
-
-Portability - This should work on other Arduinos that have an SD or
-micro SD interface either directly attached or on a plug-in shield; but
-may need some changes to I/O pin order if the SD CS is not routed to
-Pin 10 as in AlaMode case.
-
 ## Libraries
 
 > Link to the [libraries source](https://github.com/repaper/gratis/tree/master/Sketches/libraries).
@@ -186,15 +133,8 @@ Pin 10 as in AlaMode case.
   these directly.  The Command program can use these files for its
   upload command.
 * **FLASH** - Driver for the SPI FLASH chip on the EPD eval board.
-* **EPD** - E-Ink Panel driver (COG V1).
 * **EPD2** - E-Ink Panel driver (COG V2) *experimental*.
-* **EPD_GFX** - This sub-classes the
-  [Adafruit_GFX library](https://github.com/adafruit/Adafruit-GFX-Library)
-  which needs to be downloaded an installed in to the libraries folder
-  an named **Adafruit_GFX**.  **IMPORTANT** - This library module needs at
-  least 8 kBytes of SRAM on the AVR MCU to function.  So can only this
-  can be used with Arduino Mega or ATmega1280/ATmega2560 chip designs.
-* **S5813A** - Temperature sensor driver.
+* **LM75** - Temperature sensor driver.
 
 
 # Connection of EPD board to Arduino
@@ -213,12 +153,22 @@ CLK) location which vary between the various Arduinos an can be on
 dedicated pins, overlapped with Digital I/O or shared with the ICSP
 header.
 
-![EPD with Arduino Mega Photo by <a href="http://learn.adafruit.com/assets/8320">Bill Earl</a>](/images/expansion_board/epd-mega.jpg)
+<table>
+  <tr><td colspan="2">Arduino Leonardo</td><td colspan="2">Arduino Uno</td><td colspan="2">Display</td></tr>
+  <tr><td>GND</td><td>GND</td>     <td>GND</td><td>GND</td>      <td>1</td><td>GND</td></tr>
+  <tr><td>3V3</td><td>3V3</td>     <td>3V3</td><td>3V3</td>      <td>2</td><td>3V3</td></tr>
+  <tr><td>ICSP-3</td><td>SCK</td>  <td>ICSP-3</td><td>SCK</td>   <td>3</td><td>SCK</td></tr>
+  <tr><td>ICSP-4</td><td>MOSI</td> <td>ICSP-4</td><td>MOSI</td>  <td>4</td><td>MOSI</td></tr>
+  <tr><td>ICSP-1</td><td>MISO</td> <td>ICSP-1</td><td>MISO</td>  <td>5</td><td>MISO</td></tr>
+  <tr><td>8</td><td>GPIO</td>      <td>8</td><td>GPIO</td>       <td>6</td><td>SSEL</td></tr>
+  <tr><td>7</td><td>GPIO</td>      <td>7</td><td>GPIO</td>       <td>7</td><td>Busy</td></tr>
+  <tr><td>10</td><td>GPIO</td>     <td>10</td><td>GPIO</td>      <td>8</td><td>Border Ctrl</td></tr>
+  <tr><td>SCL/3</td><td>SCL</td>   <td>SCL/A5</td><td>SCL</td>   <td>9</td><td>SCL</td></tr>
+  <tr><td>SDA/2</td><td>SDA</td>   <td>SCL/A4</td><td>SDA</td>   <td>10</td><td>SDA</td></tr>
+  <tr><td>9</td><td>GPIO</td>      <td>9</td><td>GPIO</td>       <td>11</td><td>CS Flash</td></tr>
+  <tr><td>6</td><td>GPIO</td>      <td>6</td><td>GPIO</td>       <td>12</td><td>Reset</td></tr>
+  <tr><td>5</td><td>GPIO</td>      <td>5</td><td>GPIO</td>       <td>13</td><td>Pwr</td></tr>
+  <tr><td>4</td><td>GPIO</td>      <td>4</td><td>GPIO</td>       <td>14</td><td>Discharge</td></tr>
+</table>
 
-# Connection of EPD board to LaunchPad
 
-The board simply plugs onto the LaunchPad, just be sure to orient the
-board correctly; when correctly oriented the LaunchPad S1 and S2
-buttons will clear of the board:
-
-![EDP with LaunchPad](/images/expansion_board/epd-boosterpack.jpg)

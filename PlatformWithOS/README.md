@@ -1,25 +1,9 @@
-#  E-Ink Driver for: Raspberry Pi / BeagleBone Black
+#  E-Ink Driver for: Raspberry Pi
 
 # Driver Programs - Directory "driver-common"
 
-* gpio_test - simple test for GPIO driver
 * epd_test - test program for direct driving EPD panel
 * epd_fuse - present EPD as a file for easy control
-
-
-## Extra item for BeagleBone
-
-The program uses device tree files to access the GPIOs, so
-Install the necessary firware files from: https://github.com/nomel/beaglebone
-
-~~~~~
-git clone https://github.com/nomel/beaglebone.git
-cp -p beaglebone/gpio-header/generated/gpio-P9.* /lib/firmware
-~~~~~
-
-Note: There is a README-BeagleBoneBlack.md that you should also read
-as it explains the update of the Angstomsystem on the SD Car in more
-detail.
 
 
 ## Compiling
@@ -30,37 +14,13 @@ the EPD driver needs the fuse development library installed.
 ~~~~~
 # Raspberry Pi
 sudo apt-get install libfuse-dev
-# BeagleBone Black
-sudo opkg install libfuse-dev
-~~~~~
-
-### GPIO Test
-
-Connect three LEDs each with a limiting resistor (1k..2k); the
-resistor connects from an expansion connector pin to the anode of an
-LED.  Two of the LEDs will flash and the third will brighten and dim.
-
-Pin connections
-
-LED          R Pi    B B B    Description
------------  ------  -------  --------------------------
-LED_BLUE     P1_23   P9_15    Flashes on/off
-LED_WHITE    P1_21   P9_23    Fashes  off/on
-LED_PWM      P1_12   P9_14    Brightens and dims
-
-
-Build and run using:
-
-~~~~~
-make rpi-gpio_test  # bb-gpio_test
-sudo ./driver-common/gpio_test
 ~~~~~
 
 
 ### EPD Test
 
 This will first clear the panel then display a series of images (all
-2.0" images from Arduino example).  This need the Linux SPI module
+2.7" images from Arduino example).  This need the Linux SPI module
 installed.
 
 #### Raspberry Pi: Build and run using:
@@ -68,13 +28,6 @@ installed.
 ~~~~~
 sudo modprobe spi-bcm2708
 make rpi-epd_test
-sudo ./driver-common/epd_test
-~~~~~
-
-#### BeagleBone Black: Build and run using:
-
-~~~~~
-make bb-epd_test
 sudo ./driver-common/epd_test
 ~~~~~
 
@@ -115,22 +68,20 @@ Notes:
 Build and run using:
 
 ~~~~~
-make rpi-epd_fuse          # bb-epd_fuse
-sudo modprobe spi-bcm2708  # not on BeagleBone Black (note below)
+COG_VERSION=2 make rpi-epd_fuse
+sudo modprobe spi-bcm2708
 sudo mkdir /tmp/epd
-sudo ./driver-common/epd_fuse --panel=2.0 -o allow_other -o default_permissions /tmp/epd
+sudo ./driver-common/epd_fuse --panel=2.7 -o allow_other -o default_permissions /tmp/epd
 cat /tmp/epd/version
 cat /tmp/epd/panel
 echo C > /tmp/epd/command
-./driver-common/xbm2bin < cat_2_0.xbm > /tmp/epd/display
+./driver-common/xbm2bin < ./driver-common/cat_2_7.xbm > /tmp/epd/display
 echo U > /tmp/epd/command
 # try displaying other images
 # to shut down:
-sudo umount -f /tmp/fuse
-rmdir /tmp/fuse
+sudo umount -f /tmp/epd
+rmdir /tmp/epd
 ~~~~~
-
-Note: On the BeagleBone firmware is loaded to enable the SPI
 
 
 # Starting EPD FUSE at Boot
@@ -139,13 +90,13 @@ Need to install the startup script in `/etc/init.d` and install the
 EPD FUSE program in /usr/sbin, there is a make target that does this.
 
 ~~~~~
-sudo make rpi-install   # bb-install
+sudo COG_VERSION=2 make rpi-install   # bb-install
 sudo service epd-fuse start
 ls -l /dev/epd
 # to stop
 sudo service epd-fuse stop
 # to remove
-sudo make remove
+sudo COG_VERSION=V2 make rpi-remove
 ~~~~~
 
 
@@ -156,8 +107,6 @@ These need the PIL library installed:
 ~~~~~
 # Raspberry Pi
 sudo apt-get install python-imaging
-# BeagleBone Black
-sudo opkg install python-imaging
 ~~~~~
 
 
@@ -191,40 +140,6 @@ display.
 python demo/ImageDemo.py /usr/share/scratch/Media/Costumes/Animals/cat*
 python demo/ImageDemo.py /usr/share/scratch/Media/Costumes/Animals/d*.png
 ~~~~~
-
-## Twitter Demo
-
-Setup easy_install and use it to get pip, then use pip to get tweepy.
-Copy the sample configuration an edit to include your authentication
-information.  Rather than using the basic authentication it is better
-to set up a Twitter App and generate a token for this.  The token
-generation is quick at
-[https://dev.twitter.com/](https://dev.twitter.com/).  After creating
-the App,just click the button to create an access token.
-
-Use *Ctrl-C* to stop this program.
-
-~~~~~
-# Raspberry Pi
-sudo apt-get install python-setuptools
-sudo easy_install pip
-~~~~~
-
-~~~~~
-# BeagleBone Black
-opkg install python-pip python-setuptools
-~~~~~
-
-~~~~~
-# All
-sudo pip install tweepy
-# setup the config
-cp tweepy_auth.py-SAMPLE tweepy_auth.py
-# *** edit the config
-# run the demo (this watches for linux)
-python demo/TwitterDemo.py linux
-~~~~~
-
 
 ## Partial Demo
 

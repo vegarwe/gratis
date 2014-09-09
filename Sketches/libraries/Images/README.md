@@ -8,10 +8,6 @@ The files are name includes the display size:
 ----------------------------------------------------------
 Suffix         Width x Height
 -----------    ----------------
-\_1\_44.xbm    128 x 96
-
-\_2\_0.xbm     200 x 96
-
 \_2\_7.xbm     264 x 176
 ----------------------------------------------------------
 
@@ -23,11 +19,11 @@ aphrodite      Aphrodite of Rhodes statue
 
 cat            Striped cat
 
+ea             Embedded Artist logo
+
 saturn         Sixth planet and second largest planet in the Solar System
 
 text\_hello    A small sample from the EMACS hello file
-
-text\_image    Text sample
 
 venus          Detail from The Birth of Venus by Botticelli
 ----------------------------------------------------------

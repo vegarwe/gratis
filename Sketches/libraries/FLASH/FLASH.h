@@ -19,16 +19,16 @@
 
 
 // maximum bytes that can be written by one write command
-#define FLASH_PAGE_SIZE 128
+#define FLASH_PAGE_SIZE 256
 
 // to shift sector number (0..FLASH_SECTOR_COUNT) to an address for erase
 #define FLASH_SECTOR_SHIFT 12
 
 // erase size is one sector
-#define FLASH_SECTOR_SIZE 4096
+#define FLASH_SECTOR_SIZE  4096
 
 // total available sectors
-#define FLASH_SECTOR_COUNT 256
+#define FLASH_SECTOR_COUNT 1024
 
 
 class FLASH_Class {

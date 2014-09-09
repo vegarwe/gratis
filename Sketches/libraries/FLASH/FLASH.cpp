@@ -52,8 +52,8 @@ enum {
 
 
 // currently supported chip
-#define FLASH_MFG 0xc2
-#define FLASH_ID 0x2014
+#define FLASH_MFG   0xef //Winbond
+#define FLASH_ID  0x4016 //W25Q32
 
 
 // the default FLASH device

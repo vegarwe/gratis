@@ -1,34 +1,23 @@
 #######################################
-# Syntax Coloring Map
+# Syntax Coloring Map LM75
 #######################################
 
 #######################################
 # Datatypes (KEYWORD1)
 #######################################
 
-EPD	KEYWORD1
-
+LM75	KEYWORD1
 
 #######################################
 # Methods and Functions (KEYWORD2)
 #######################################
-
 begin	KEYWORD2
 end	KEYWORD2
-frame_fixed	KEYWORD2
-frame_data	KEYWORD2
-frame_cb	KEYWORD2
+read	KEYWORD2
+readVoltage	KEYWORD2
 
 
 #######################################
 # Constants (LITERAL1)
 #######################################
-
-EPD_1_44	LITERAL1
-EPD_2_0	LITERAL1
-EPD_2_7	LITERAL1
-
-EPD_compensate	LITERAL1
-EPD_white	LITERAL1
-EPD_inverse	LITERAL1
-EPD_normal	LITERAL1
+#LM75_	LITERAL1
