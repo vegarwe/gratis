@@ -207,34 +207,6 @@ python demo/CounterDemo.py 3 20
 
 # E-Ink Panel Board Connections
 
-This is for connection to the Evaluation board.
+The [2.7 inch E-paper Display Module](http://www.embeddedartists.com/products/displays/lcd_27_epaper.php) rev D can
+be connected directly to the Raspberry Pi using a 26-pos IDC ribbon cable.
 
-Pin Number   Description       Colour   Raspberry Pi           BeagleBone Black
-----------   ---------------   ------   ---------------------  -------------------
-1.           Vcc 3V            Red      P1-01                  P9-03
-2.           *(LED1)*          White    -
-3.           *(UART_RX)*       Grey     -
-4.           *(UART_TX)*       Purple   -
-5.           *(SW2)*           Blue     -
-6.           Temperature       Green    - (ext ADC required)   -?- P9-39 (not yet)
-7.           SPI\_CLK          Yellow   P1-23                  P9-22
-8.           BUSY              Orange   P1-22                  P9-27
-9.           PWM               Brown    P1-12                  P9-14
-10.          /RESET            Black    P1-18                  P9-26
-11.          PANEL\_ON         Red      P1-16                  P9-12
-12.          DISCHARGE         White    P1-10                  P9-23
-13.          BORDER_CONTROL    Grey     P1-08                  P9-15
-14.          SPI_MISO          Purple   P1-21                  P9-21
-15.          SPI_MOSI          Blue     P1-19                  P9-18
-16.          *(RST/SBWTDIO)*   Green    -                      -
-17.          *(TEST/SBWTCK)*   Yellow   -                      -
-18.          /FLASH\_CS        Orange   P1-26                  - Vcc P9-04
-19.          /EPD\_CS          Brown    P1-24                  P9-17
-20.          GND               Black    P1-25                  P9-01
-
-
-# TO DO / BUGS
-
-* Verify the compensation timer.
-
-* Other demos, perhaps.
