@@ -27,8 +27,8 @@ installed.
 
 ~~~~~
 sudo modprobe spi-bcm2708
-make rpi-epd_test
-sudo ./driver-common/epd_test
+COG_VERSION=V2 make rpi-epd_test
+sudo ./driver-common/epd_test 2.7
 ~~~~~
 
 
@@ -36,6 +36,7 @@ sudo ./driver-common/epd_test
 
 This allows the display to be represented as a virtual director of files, which are:
 
+~~~~~
 File         Read/Write   Description
 --------     -----------  ---------------------------------
 version      Read Only    The driver version number
@@ -46,11 +47,14 @@ temperature  Read Write   Set this to the current temperature in Celsius
 command      Write Only   Execute display operation
 BE           Directory    Big endian version of current and display
 LE           Directory    Little endian version of current and display
+~~~~~
 
+~~~~~
 Command   Byte   Description
 --------  -----  --------------------------------
 'C'       0x43   Clear the EPD, set `current` to all zeros, `display` is not affected
 'U'       0x5A   Erase `current` from EPD, output `display` to EPD, copy display to `current`
+~~~~~
 
 Notes:
 
@@ -68,7 +72,7 @@ Notes:
 Build and run using:
 
 ~~~~~
-COG_VERSION=2 make rpi-epd_fuse
+COG_VERSION=V2 make rpi-epd_fuse
 sudo modprobe spi-bcm2708
 sudo mkdir /tmp/epd
 sudo ./driver-common/epd_fuse --panel=2.7 -o allow_other -o default_permissions /tmp/epd
@@ -80,22 +84,38 @@ echo U > /tmp/epd/command
 # try displaying other images
 # to shut down:
 sudo umount -f /tmp/epd
-rmdir /tmp/epd
+sudo rmdir /tmp/epd
 ~~~~~
 
 
 # Starting EPD FUSE at Boot
 
 Need to install the startup script in `/etc/init.d` and install the
-EPD FUSE program in /usr/sbin, there is a make target that does this.
+EPD FUSE program in `/usr/sbin`, there is a make target that does this.
 
 ~~~~~
-sudo COG_VERSION=2 make rpi-install   # bb-install
+sudo COG_VERSION=V2 make rpi-install
 sudo service epd-fuse start
 ls -l /dev/epd
-# to stop
+~~~~~
+
+To stop the service temporarily:
+
+~~~~~
 sudo service epd-fuse stop
-# to remove
+~~~~~
+
+To start the service again:
+
+~~~~~
+sudo service epd-fuse start
+~~~~~
+
+To permanently preventing EPD FUSE to start at boot (note that this command
+must be executed when the service is running, i.e. you should **not** do a `sudo service epd-fuse stop`
+first):
+
+~~~~~
 sudo COG_VERSION=V2 make rpi-remove
 ~~~~~
 
@@ -108,6 +128,8 @@ These need the PIL library installed:
 # Raspberry Pi
 sudo apt-get install python-imaging
 ~~~~~
+
+The examples also need the [EPD FUSE service](#starting-epd-fuse-at-boot)
 
 
 ## Drawing Demo
@@ -156,9 +178,7 @@ python demo/PartialDemo.py 3 20
 ## Counter Demo
 
 Display a 4 digit hex counter uses partial update to only change the
-updated digits.  This will look somewhat strange as the display inversion
-will make the counter appear to go through a sequence like:
-0000 0001 0000 0001 ...delay... 0001 0002 0001 0002
+updated digits. 
 
 Use *Ctrl-C* to stop this program.
 
