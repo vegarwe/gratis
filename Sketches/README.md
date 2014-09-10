@@ -156,7 +156,8 @@ connector (J5). Any one of them can be used to connect the display board to the 
 One way to connect the display module is to use [jumper wires](http://www.embeddedartists.com/products/acc/acc_wire_fm.php). The table below shows where each wire should be connected:
 
 <table>
-  <tr><td colspan="2">Arduino Leonardo</td><td colspan="2">Arduino Uno</td><td colspan="2">Display, 14-pin connector</td></tr>
+  <tr><th colspan="2">Arduino Leonardo</th><th colspan="2">Arduino Uno</th><th colspan="2">Display, 14-pin connector</th></tr>
+  <tr><th>Pin Number</th><th>Signal</th><th>Pin Number</th><th>Signal</th><th>Pin Number</th><th>Signal</th></tr>
   <tr><td>GND</td><td>GND</td>     <td>GND</td><td>GND</td>      <td>1</td><td>GND</td></tr>
   <tr><td>3V3</td><td>3V3</td>     <td>3V3</td><td>3V3</td>      <td>2</td><td>3V3</td></tr>
   <tr><td>ICSP-3</td><td>SCK</td>  <td>ICSP-3</td><td>SCK</td>   <td>3</td><td>SCK</td></tr>
