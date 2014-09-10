@@ -5,14 +5,12 @@ straightforward C structure that can be included in the demo program.
 
 The files are name includes the display size:
 
-    ----------------------------------------------------------
     Suffix         Width x Height
     -----------    ----------------
     \_2\_7.xbm     264 x 176
-    ----------------------------------------------------------
-    
-    
-    ----------------------------------------------------------
+
+
+
     Name           Description
     -----------    -----------------------------
     aphrodite      Aphrodite of Rhodes statue
@@ -26,4 +24,3 @@ The files are name includes the display size:
     text\_hello    A small sample from the EMACS hello file
     
     venus          Detail from The Birth of Venus by Botticelli
-    ----------------------------------------------------------
