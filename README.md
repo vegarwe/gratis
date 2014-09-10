@@ -5,7 +5,7 @@ modified and tested to work with the [2.7" ePaper display module](http://www.emb
 
 The following changes have been made:
 
-1. Removed TI LaunchPad and BeagleBone support as it could not be verified
+1. Removed TI LaunchPad and BeagleBone support as it has not be verified
 2. Changed examples to default to the 2.7" display size
 3. Removed images for the 1.44" and 2.0" displays
 4. Updated documentation to reflect that the COG v2 is used
