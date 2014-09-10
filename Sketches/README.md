@@ -37,7 +37,7 @@ possible to install a command line only version.
 
 ## Demo Sketch
 
-> Link to the [demo2 source](https://github.com/embeddedartists/gratis/tree/master/Sketches/demo).
+> Link to the [demo2 source](https://github.com/embeddedartists/gratis/tree/master/Sketches/demo2).
 
 This example first clears the screen, then toggles between two images.
 It needs the serial port (9600 8N1) connected and displays the version,
@@ -50,7 +50,7 @@ are possible to be stored since the on-chip FLASH is limited.
 
 ## Command Sketch
 
-> Link to the [command2 source](https://github.com/embeddedartists/gratis/tree/master/Sketches/command).
+> Link to the [command2 source](https://github.com/embeddedartists/gratis/tree/master/Sketches/command2).
 
 A command-line example that accepts single character command from the
 serial port (9600 8N1).  Functions include XBM upload to the SPI FLASH
@@ -96,7 +96,7 @@ type `i00` to display it.
 
 ## Flash Loader Sketch
 
-> Link to the [flash loader source](https://github.com/embeddedartists/gratis/tree/master/Sketches/flash_loader).
+> Link to the [flash loader source](https://github.com/embeddedartists/gratis/tree/master/Sketches/flash_loader2).
 
 This program has two modes of operation:
 
