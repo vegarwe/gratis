@@ -4,7 +4,7 @@ This project officially supports the Arduino-based platform. The Ti LaunchPad su
 available in the original [repaper/gratis](https://github.com/repaper/gratis) repository 
 has been commented out and is completely untested.
 
-The examples have been verified on Arduino Leonardo (R3) and Arduino Uno (R2) boards using
+The examples have been verified on [Arduino Leonardo](http://arduino.cc/en/Main/ArduinoBoardLeonardo) (R3) and [Arduino Uno](http://arduino.cc/en/Main/ArduinoBoardUno) (R2) boards using
 the 1.0.5 version of the IDE.
 
 ## Source Code Repository
