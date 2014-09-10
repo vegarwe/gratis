@@ -9,7 +9,7 @@ the 1.0.5 version of the IDE.
 
 ## Source Code Repository
 
-The source code to the Repaper software is hosted by
+The source code for the Repaper software is hosted by
 [GitHub](https://github.com/embeddedartists/gratis). The [example programs](#example-programs) are in
 [Sketches](https://github.com/embeddedartists/gratis/tree/master/Sketches) directory.
 
