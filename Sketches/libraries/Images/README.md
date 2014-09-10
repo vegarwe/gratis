@@ -10,17 +10,13 @@ The files are name includes the display size:
     \_2\_7.xbm     264 x 176
 
 
+These image are available:
 
     Name           Description
     -----------    -----------------------------
     aphrodite      Aphrodite of Rhodes statue
-    
     cat            Striped cat
-    
     ea             Embedded Artist logo
-    
     saturn         Sixth planet and second largest planet in the Solar System
-    
-    text\_hello    A small sample from the EMACS hello file
-    
+    text_hello     A small sample from the EMACS hello file
     venus          Detail from The Birth of Venus by Botticelli
