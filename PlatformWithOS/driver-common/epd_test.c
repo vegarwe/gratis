@@ -38,7 +38,6 @@
 #include "aphrodite_1_44.xbm"
 #include "cat_1_44.xbm"
 #include "saturn_1_44.xbm"
-#include "text_hello_1_44.xbm"
 #include "text_image_1_44.xbm"
 #include "venus_1_44.xbm"
 
@@ -46,15 +45,14 @@
 #include "aphrodite_2_0.xbm"
 #include "cat_2_0.xbm"
 #include "saturn_2_0.xbm"
-#include "text_hello_2_0.xbm"
 #include "text_image_2_0.xbm"
 #include "venus_2_0.xbm"
 
 // 2.7" test images
+#include "ea_2_7.xbm"
 #include "aphrodite_2_7.xbm"
 #include "cat_2_7.xbm"
 #include "saturn_2_7.xbm"
-#include "text_hello_2_7.xbm"
 #include "text_image_2_7.xbm"
 #include "venus_2_7.xbm"
 
@@ -63,7 +61,6 @@ static const uint8_t *images_1_44[] = {
 	aphrodite_1_44_bits,
 	cat_1_44_bits,
 	saturn_1_44_bits,
-	text_hello_1_44_bits,
 	text_image_1_44_bits,
 	venus_1_44_bits
 };
@@ -72,16 +69,15 @@ static const uint8_t *images_2_0[] = {
 	aphrodite_2_0_bits,
 	cat_2_0_bits,
 	saturn_2_0_bits,
-	text_hello_2_0_bits,
 	text_image_2_0_bits,
 	venus_2_0_bits
 };
 
 static const uint8_t *images_2_7[] = {
+	ea_2_7_bits,
 	aphrodite_2_7_bits,
 	cat_2_7_bits,
 	saturn_2_7_bits,
-	text_hello_2_7_bits,
 	text_image_2_7_bits,
 	venus_2_7_bits
 };
