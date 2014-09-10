@@ -76,13 +76,31 @@ COG_VERSION=V2 make rpi-epd_fuse
 sudo modprobe spi-bcm2708
 sudo mkdir /tmp/epd
 sudo ./driver-common/epd_fuse --panel=2.7 -o allow_other -o default_permissions /tmp/epd
+~~~~~
+
+Verify that it worked by checking version and panel type, should return `3` and `EPD 2.7 264x176 COG 2`
+
+~~~~~
 cat /tmp/epd/version
 cat /tmp/epd/panel
+~~~~~
+
+Clear screen:
+
+~~~~~
 echo C > /tmp/epd/command
+~~~~~
+
+Send image to display and update display to show it:
+
+~~~~~
 ./driver-common/xbm2bin < ./driver-common/cat_2_7.xbm > /tmp/epd/display
 echo U > /tmp/epd/command
-# try displaying other images
-# to shut down:
+~~~~~
+
+To shut down:
+
+~~~~~
 sudo umount -f /tmp/epd
 sudo rmdir /tmp/epd
 ~~~~~
