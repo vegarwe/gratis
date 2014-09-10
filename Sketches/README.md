@@ -1,9 +1,7 @@
-% RePaper Code
-
 # Code
 
-This project officially supports the Arduino-based platform. The Ti LaunchPad suppor that is 
-available in the original [repaper/gratis]((https://github.com/repaper/gratis) repository 
+This project officially supports the Arduino-based platform. The Ti LaunchPad support that is 
+available in the original [repaper/gratis](https://github.com/repaper/gratis) repository 
 has been commented out and is completely untested.
 
 The examples have been verified on Arduino Leonardo (R3) and Arduino Uno (R2) boards using
@@ -12,8 +10,8 @@ the 1.0.5 version of the IDE.
 ## Source Code Repository
 
 The source code to the Repaper software is hosted by
-[GitHub](https://github.com/repaper/gratis). The [example programs](#example-programs) are in
-[Sketches](https://github.com/repaper/gratis/tree/master/Sketches) directory.
+[GitHub](https://github.com/embeddedartists/gratis). The [example programs](#example-programs) are in
+[Sketches](https://github.com/embeddedartists/gratis/tree/master/Sketches) directory.
 
 
 ## Development Tools
@@ -36,50 +34,36 @@ possible to install a command line only version.
 2. The COG V2 does not use PWM - the pin is used as chip select for the
    onboard SPI-NOR flash instead.
 
----
-
-The example programs support both the Arduino (Atmel AVR) and the
-Energia (TI LaunchPad with MSP430G2553).
-
-The files include some conditional code to switch between the two platforms.
-This code does the following:
-
-1. Convert PROGMEM types to normal types for the TI MCU since it has a unified
-   address space.
-
-2. Adjust the I/O pins definitions and ADC reference for differences between
-   the two platforms.
 
 ## Demo Sketch
 
-> Link to the [demo source](https://github.com/repaper/gratis/tree/master/Sketches/demo).
+> Link to the [demo2 source](https://github.com/embeddedartists/gratis/tree/master/Sketches/demo).
 
 This example first clears the screen, then toggles between two images.
-Needs the serial port (9600 8N1) connected and displays the version,
+It needs the serial port (9600 8N1) connected and displays the version,
 temperature and compensation values on each cycle.
 
-This is built upon the EPD API in the libraries folder and shows how
+This is built upon the EPD2 API in the libraries folder and shows how
 to use the API to display images from the MCU FLASH.  Only a few images
 are possible to be stored since the on-chip FLASH is limited.
 
-Not: This will not run on the TI LaunchPad with a 2.7" display as the
-resulting code exceeds the 16kB memory size, only 1.44" and 2.0" will
-fit on this platform.
 
 ## Command Sketch
 
-> Link to the [command source](https://github.com/repaper/gratis/tree/master/Sketches/command).
+> Link to the [command2 source](https://github.com/embeddedartists/gratis/tree/master/Sketches/command).
 
 A command-line example that accepts single character command from the
 serial port (9600 8N1).  Functions include XBM upload to the SPI FLASH
-chip on the EPD evaluation board, display image from this FLASH and
+chip on the display board, display image from this FLASH and
 several other functions.
 
 Use the `h` command on the serial port (9600 8N1) to obtain a list of
 commands.  Some of the commands are shown like `e<ss>` this *<ss>*
 represents a two digit FLASH sector number in the range *00..ff* (a
 total of 256 sectors).  The 1.44" and 2.0" display images take one sector
-but the 2.7" displays take two adjacent sectors.
+but the 2.7" displays take *two* adjacent sectors - this means that 
+it is necessary to issue both `e00` and `e01` before uploading a 2.7" image
+with `u00`.
 
 When using the serial monitor on Arduino/Energia IDE any command that
 take a hex number as parameter needs a `<space>` character after it, as
@@ -105,12 +89,16 @@ The image stored is compatible with the flash_loader sketch as
 described below and that program can be used to cycle through a set of
 images uploaded by this program.
 
+Typical use: `h` to bring up the help, `t` to check that the temperature
+is working and then `w` to clear the display. To upload an image do `e00`,
+`e01` and then `u00`. Send the image file from the terminal program and then
+type `i00` to display it.
 
 ## Flash Loader Sketch
 
-> Link to the [flash loader source](https://github.com/repaper/gratis/tree/master/Sketches/flash_loader).
+> Link to the [flash loader source](https://github.com/embeddedartists/gratis/tree/master/Sketches/flash_loader).
 
-this program has two modes of operation:
+This program has two modes of operation:
 
 1. Copy a #included image to the FLASH chip on the eval board.  define
    the image name and the destination sector.  After programming the
@@ -123,10 +111,31 @@ this program has two modes of operation:
    format as the command program above, so any images uploaded by it
    can be displayed by this program
 
+The configuration of both modes is handled in this block of code:
+
+<pre><code>// select image from:  text_image cat ea aphrodite venus saturn
+// select a suitable sector, (size 270 will take two sectors)
+#define IMAGE         ea
+#define FLASH_SECTOR  0
+
+// if the display list is defined it will take priority over the flashing
+// (and FLASH code is disbled)
+// define a list of {sector, milliseconds}
+//#define DISPLAY_LIST {0, 3000}, {2, 3000}, {4, 3000}
+</code></pre>
+
+Note: To show three different images with the `DISPLAY_LIST` as shown 
+above you will have to upload the program four times to the Arduino:
+
+1. `DISPLAY_LIST` not defined, `IMAGE` is e.g. *ea*, `FLASH_SECTOR` is *0*
+2. `DISPLAY_LIST` not defined, `IMAGE` is e.g. *cat*, `FLASH_SECTOR` is *2*
+3. `DISPLAY_LIST` not defined, `IMAGE` is e.g. *venus*, `FLASH_SECTOR` is *4*
+4. `DISPLAY_LIST` defined and set to *{0, 3000}, {2, 3000}, {4, 3000}*
+
 
 ## Libraries
 
-> Link to the [libraries source](https://github.com/repaper/gratis/tree/master/Sketches/libraries).
+> Link to the [libraries source](https://github.com/embeddedartists/gratis/tree/master/Sketches/libraries).
 (copy all of these to you local libraries folder)
 
 * **Images** - Sample XBM files.  The demo program includes two of
@@ -137,24 +146,17 @@ this program has two modes of operation:
 * **LM75** - Temperature sensor driver.
 
 
-# Connection of EPD board to Arduino
+# Connection of 2.7 inch E-paper Display Module to Arduino
 
-> See: Using the Extension board with Ardunio ([HTML](http://learn.adafruit.com/repaper-eink-development-board), [PDF](http://learn.adafruit.com/downloads/pdf/repaper-eink-development-board.pdf)) by [Adafruit](http://www.adafruit.com)
+> See: Schematics for the [2.7 inch E-paper Display Module](http://www.embeddedartists.com/products/displays/lcd_27_epaper.php), Arduino Leonardo ([PDF](http://arduino.cc/en/uploads/Main/arduino-leonardo-schematic_3b.pdf)) and Arduino Uno ([PDF](http://arduino.cc/en/uploads/Main/Arduino_Uno_Rev3-schematic.pdf))
 
-The board needs a cable to connect to the Arduino.  The EPD boards
-are dual voltage and include a 3.3V regulator for the EPD panel and
-level converters and so it can directly connect to the 5 Volt
-Arduinos.  Note that the board uses the SPI interface, which is on
-different pins depending on the particular Arduino version.  The
-[Extension Board](http://repaper.org/doc/extension_board.html) has a
-table of [Pin Assignments](http://repaper.org/doc/extension_board.html#pin-assignment)
-for some Arduinos; the main difference is the three SPI pin (SI, SO,
-CLK) location which vary between the various Arduinos an can be on
-dedicated pins, overlapped with Digital I/O or shared with the ICSP
-header.
+The display module have two 14-pin connectors (J2 is 50mil and J3 is 100mil) and one 26-pin
+connector (J5). Any one of them can be used to connect the display board to the Arduino board.
+
+One way to connect the display module is to use [jumper wires](http://www.embeddedartists.com/products/acc/acc_wire_fm.php). The table below shows where each wire should be connected:
 
 <table>
-  <tr><td colspan="2">Arduino Leonardo</td><td colspan="2">Arduino Uno</td><td colspan="2">Display</td></tr>
+  <tr><td colspan="2">Arduino Leonardo</td><td colspan="2">Arduino Uno</td><td colspan="2">Display, 14-pin connector</td></tr>
   <tr><td>GND</td><td>GND</td>     <td>GND</td><td>GND</td>      <td>1</td><td>GND</td></tr>
   <tr><td>3V3</td><td>3V3</td>     <td>3V3</td><td>3V3</td>      <td>2</td><td>3V3</td></tr>
   <tr><td>ICSP-3</td><td>SCK</td>  <td>ICSP-3</td><td>SCK</td>   <td>3</td><td>SCK</td></tr>
@@ -171,4 +173,5 @@ header.
   <tr><td>4</td><td>GPIO</td>      <td>4</td><td>GPIO</td>       <td>14</td><td>Discharge</td></tr>
 </table>
 
+The only difference in pinning between the Leonardo and Uno boards is where to connect the I2C/Wire pins (SDA/SCL).
 
