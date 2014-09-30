@@ -15,9 +15,9 @@
 
 import sys
 import os
-import Image
-import ImageDraw
-import ImageFont
+from PIL import Image
+from PIL import ImageDraw
+from PIL import ImageFont
 from datetime import datetime
 import time
 from EPD import EPD
@@ -32,7 +32,9 @@ possible_fonts = [
     '/usr/share/fonts/truetype/ttf-dejavu/DejaVuSansMono-Bold.ttf',   # R.Pi
     '/usr/share/fonts/truetype/freefont/FreeMono.ttf',                # R.Pi
     '/usr/share/fonts/truetype/LiberationMono-Bold.ttf',              # B.B
-    '/usr/share/fonts/truetype/DejaVuSansMono-Bold.ttf'               # B.B
+    '/usr/share/fonts/truetype/DejaVuSansMono-Bold.ttf',              # B.B
+    '/usr/share/fonts/TTF/FreeMonoBold.ttf',                          # Arch
+    '/usr/share/fonts/TTF/DejaVuSans-Bold.ttf'                        # Arch
 ]
 
 
