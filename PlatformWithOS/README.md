@@ -205,6 +205,56 @@ python demo/CounterDemo.py 3 20
 ~~~~~
 
 
+## Clock Demo 1
+
+Displays the current time (in minutes), date and weekday. Updates
+every minute to show the current time.
+
+Use *Ctrl-C* to stop this program.
+
+~~~~~
+python demo/Clock27.py
+~~~~~
+
+
+## Clock Demo 2
+
+Displays the current time (in secodns) and date. Updates
+every five seconds to show the current time. Note that this demo
+will almost continuously update the display so it will be a constant
+flicker.
+
+Use *Ctrl-C* to stop this program.
+
+~~~~~
+python demo/ClockDemo.py
+~~~~~
+
+
+## IP Address Demo
+
+Displays the current IP address and gateway. If the network connection
+is lost the display will instead show a *Not Connected* message until
+the connection is restored again.
+
+Use *Ctrl-C* to stop this program.
+
+~~~~~
+python demo/IpAddrDemo.py
+~~~~~
+
+
+## Barcode Demo
+
+Generates and displays two bar codes. See more information in the [./demo/barcode/](https://github.com/embeddedartists/gratis/tree/master/PlatformWithOS/demo/barcode/) subfolder.
+
+This program must be executed from inside the `./demo/barcode/` folder and with a special command:
+
+~~~~~
+PYTHONPATH=.. python BarCodeDemo.py
+~~~~~
+
+
 # E-Ink Panel Board Connections
 
 The [2.7 inch E-paper Display Module](http://www.embeddedartists.com/products/displays/lcd_27_epaper.php) rev D can
