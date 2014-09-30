@@ -57,7 +57,7 @@ def main(argv):
         '/usr/share/fonts/truetype/ttf-dejavu/DejaVuSansMono-Bold.ttf',   # R.Pi
         '/usr/share/fonts/truetype/freefont/FreeMono.ttf',                # R.Pi
         '/usr/share/fonts/truetype/LiberationMono-Bold.ttf',              # B.B
-        '/usr/share/fonts/truetype/DejaVuSansMono-Bold.ttf'               # B.B
+        '/usr/share/fonts/truetype/DejaVuSansMono-Bold.ttf',              # B.B
         '/usr/share/fonts/TTF/DejaVuSansMono-Bold.ttf'                    # Arch
     ]
 
@@ -66,7 +66,7 @@ def main(argv):
         '/usr/share/fonts/truetype/ttf-dejavu/DejaVuSans.ttf',            # R.Pi
         '/usr/share/fonts/truetype/freefont/FreeMono.ttf',                # R.Pi
         '/usr/share/fonts/truetype/LiberationSans-Regular.ttf',           # B.B
-        '/usr/share/fonts/truetype/DejaVuSans.ttf'                        # B.B
+        '/usr/share/fonts/truetype/DejaVuSans.ttf',                       # B.B
         '/usr/share/fonts/TTF/DejaVuSans.ttf'                             # Arch
     ]
 
