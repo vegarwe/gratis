@@ -156,22 +156,22 @@ connector (J5). Any one of them can be used to connect the display board to the 
 One way to connect the display module is to use [jumper wires](http://www.embeddedartists.com/products/acc/acc_wire_fm.php). The table below shows where each wire should be connected:
 
 <table>
-  <tr><th colspan="2">Arduino Leonardo</th><th colspan="2">Arduino Uno</th><th colspan="2">Display, 14-pin connector</th></tr>
-  <tr><th>Pin Number</th><th>Signal</th><th>Pin Number</th><th>Signal</th><th>Pin Number</th><th>Signal</th></tr>
-  <tr><td>GND</td><td>GND</td>     <td>GND</td><td>GND</td>      <td>1</td><td>GND</td></tr>
-  <tr><td>3V3</td><td>3V3</td>     <td>3V3</td><td>3V3</td>      <td>2</td><td>3V3</td></tr>
-  <tr><td>ICSP-3</td><td>SCK</td>  <td>ICSP-3</td><td>SCK</td>   <td>3</td><td>SCK</td></tr>
-  <tr><td>ICSP-4</td><td>MOSI</td> <td>ICSP-4</td><td>MOSI</td>  <td>4</td><td>MOSI</td></tr>
-  <tr><td>ICSP-1</td><td>MISO</td> <td>ICSP-1</td><td>MISO</td>  <td>5</td><td>MISO</td></tr>
-  <tr><td>8</td><td>GPIO</td>      <td>8</td><td>GPIO</td>       <td>6</td><td>SSEL</td></tr>
-  <tr><td>7</td><td>GPIO</td>      <td>7</td><td>GPIO</td>       <td>7</td><td>Busy</td></tr>
-  <tr><td>10</td><td>GPIO</td>     <td>10</td><td>GPIO</td>      <td>8</td><td>Border Ctrl</td></tr>
-  <tr><td>SCL/3</td><td>SCL</td>   <td>SCL/A5</td><td>SCL</td>   <td>9</td><td>SCL</td></tr>
-  <tr><td>SDA/2</td><td>SDA</td>   <td>SCL/A4</td><td>SDA</td>   <td>10</td><td>SDA</td></tr>
-  <tr><td>9</td><td>GPIO</td>      <td>9</td><td>GPIO</td>       <td>11</td><td>CS Flash</td></tr>
-  <tr><td>6</td><td>GPIO</td>      <td>6</td><td>GPIO</td>       <td>12</td><td>Reset</td></tr>
-  <tr><td>5</td><td>GPIO</td>      <td>5</td><td>GPIO</td>       <td>13</td><td>Pwr</td></tr>
-  <tr><td>4</td><td>GPIO</td>      <td>4</td><td>GPIO</td>       <td>14</td><td>Discharge</td></tr>
+  <tr><th colspan="2">Arduino Leonardo</th><th colspan="2">Arduino Uno</th><th colspan="2">Arduino Mega 2560</th><th colspan="2">Display, 14-pin connector</th></tr>
+  <tr><th>Pin #</th><th>Signal</th><th>Pin #</th><th>Signal</th><th>Pin #</th><th>Signal</th><th>Pin #</th><th>Signal</th></tr>
+  <tr><td>GND</td><td>GND</td>     <td>GND</td><td>GND</td>     <td>GND</td><td>GND</td>  <td>1</td><td>GND</td></tr>
+  <tr><td>3V3</td><td>3V3</td>     <td>3V3</td><td>3V3</td>     <td>3V3</td><td>3V3</td>  <td>2</td><td>3V3</td></tr>
+  <tr><td>ICSP-3</td><td>SCK</td>  <td>ICSP-3</td><td>SCK</td>  <td>52</td><td>SCK</td>   <td>3</td><td>SCK</td></tr>
+  <tr><td>ICSP-4</td><td>MOSI</td> <td>ICSP-4</td><td>MOSI</td> <td>51</td><td>MOSI</td>  <td>4</td><td>MOSI</td></tr>
+  <tr><td>ICSP-1</td><td>MISO</td> <td>ICSP-1</td><td>MISO</td> <td>50</td><td>MISO</td>  <td>5</td><td>MISO</td></tr>
+  <tr><td>8</td><td>GPIO</td>      <td>8</td><td>GPIO</td>      <td>8</td><td>GPIO</td>   <td>6</td><td>SSEL</td></tr>
+  <tr><td>7</td><td>GPIO</td>      <td>7</td><td>GPIO</td>      <td>7</td><td>GPIO</td>   <td>7</td><td>Busy</td></tr>
+  <tr><td>10</td><td>GPIO</td>     <td>10</td><td>GPIO</td>     <td>10</td><td>GPIO</td>  <td>8</td><td>Border Ctrl</td></tr>
+  <tr><td>SCL/3</td><td>SCL</td>   <td>SCL/A5</td><td>SCL</td>  <td>21</td><td>SCL</td>   <td>9</td><td>SCL</td></tr>
+  <tr><td>SDA/2</td><td>SDA</td>   <td>SCL/A4</td><td>SDA</td>  <td>20</td><td>SDA</td>   <td>10</td><td>SDA</td></tr>
+  <tr><td>9</td><td>GPIO</td>      <td>9</td><td>GPIO</td>      <td>9</td><td>GPIO</td>   <td>11</td><td>CS Flash</td></tr>
+  <tr><td>6</td><td>GPIO</td>      <td>6</td><td>GPIO</td>      <td>6</td><td>GPIO</td>   <td>12</td><td>Reset</td></tr>
+  <tr><td>5</td><td>GPIO</td>      <td>5</td><td>GPIO</td>      <td>5</td><td>GPIO</td>   <td>13</td><td>Pwr</td></tr>
+  <tr><td>4</td><td>GPIO</td>      <td>4</td><td>GPIO</td>      <td>4</td><td>GPIO</td>   <td>14</td><td>Discharge</td></tr>
 </table>
 
 The only difference in pinning between the Leonardo and Uno boards is where to connect the I2C/Wire pins (SDA/SCL).
