@@ -181,6 +181,23 @@ python demo/ImageDemo.py /usr/share/scratch/Media/Costumes/Animals/cat*
 python demo/ImageDemo.py /usr/share/scratch/Media/Costumes/Animals/d*.png
 ~~~~~
 
+
+## Image demo with button
+> See: [How to use GPIO on Raspberry Pi](http://makezine.com/projects/tutorial-raspberry-pi-gpio-pins-and-python/)
+
+This demo works in the same way as the other Image demo but instead of
+always waiting 3 seconds between each update it is now possible to advance
+to the new image using the button on the display board.
+
+Note that to access the GPIO library needed for the button the program
+must be executed with root privileges:
+
+~~~~~
+sudo python demo/ImageDemoButton.py /usr/share/scratch/Media/Costumes/Animals/cat*
+sudo python demo/ImageDemoButton.py /usr/share/scratch/Media/Costumes/Animals/d*.png
+~~~~~
+
+
 ## Partial Demo
 
 Display random overlapping rectangles using partial update.  First
