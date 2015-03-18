@@ -13,7 +13,7 @@ To see what your module has, look at the back of it:
 
 ![ePaper module](AS12_vs_BS13.png "ePaper markings")
 
-The board in the image above is rev D (as shown in one of the circles) and it is a EM027BS013 display, shown by an X next to the name.
+The board in the image above is rev D (as shown in one of the circles) and it is a EM027BS013 display, shown by an X next to the name. If the board is rev D but the two checkboxes for EM027AS12/EM027BS13 are missing, then it is assumed that it is a EM027BS13 display.
 
 If your board is not rev D or if it is a rev D board with an EM027AS12 mounted, then go to the [product page](http://www.embeddedartists.com/products/displays/lcd_27_epaper.php) and look under **EM027AS012** in the table.
 
@@ -35,15 +35,15 @@ In the dialog that appears, navigate to Advanced Options and then SPI. Select to
 The A+, B+ and version 2 models come with 40 gpio pins. You can use a 40-pin ribbon cable and connect part of it like this:
 
 ![Raspberry Pi 2](raspberrypi2.png "Raspberry Pi 2")
-![ePaper module](AS12_vs_BS13.png "ePaper markings")
+![ePaper module](40_pin_connector.png "ePaper markings")
 
-Note that the keying must be as shown in the images for the pins to align correctly.
+Note that the keying must be as shown in the images for the pins to align correctly. As the cable is 40 pins and the pin list is 26, 14 pins will stick out. Make sure they stick out on the side as shown above.
 
 ###  Raspberry Pi A and B models
 
 The A and B models come with 26 gpio pins. You can use a 26-pin ribbon cable and connect it like this:
 
-![Raspberry Pi 1](raspberrypi2.png "Raspberry Pi 1")
+![Raspberry Pi 1](raspberrypi1.png "Raspberry Pi 1")
 ![ePaper module](26_pin_connector.png "ePaper markings")
 
 Note that the keying must be as shown in the images for the pins to align correctly.
