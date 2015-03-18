@@ -24,6 +24,7 @@
 #include <stdint.h>
 #include <stdbool.h>
 #include <stdio.h>
+#include <string.h>
 #include <stdlib.h>
 #include <fcntl.h>
 #include <sys/mman.h>
@@ -34,7 +35,8 @@
 
 // register addresses in Rasberry PI
 enum {
-	BCM_PERIPERALS_ADDRESS = 0x20000000,
+	BCM_PERIPERALS_ADDRESS      = 0x20000000,
+	BCM_PERIPERALS_ADDRESS_RPI2 = 0x3f000000,
 	GPIO_REGISTERS         = 0x00200000,
 	PWM_REGISTERS          = 0x0020C000,
 	CLOCK_REGISTERS        = 0x00101000,
@@ -368,12 +370,78 @@ void GPIO_pwm_write(int pin, uint32_t value) {
 // map page size
 #define MAP_SIZE 4096
 
+// According to http://archlinuxarm.org/forum/viewtopic.php?f=8&t=8445
+// a Raspberry Pi 2 uses 0x3F000000 as base for peripheral memory and
+// older versions use 0x20000000. To detect which one we are running
+// on the /proc/cpuinfo file is read and if it contains BCM2709 then
+// it is version 2, otherwise we assume version 1
+static uint32_t isRaspberryPi2() {
+   FILE* fp;
+   char buffer[1024*2];
+   size_t bytes_read;
+   char* match;
+   bool result = 0;
+   static int lastResult = -1;
+
+   /* Avoid testing this over and over */
+   if (lastResult == -1) {
+      /* Read the entire contents of /proc/cpuinfo into the buffer.  */
+      fp = fopen ("/proc/cpuinfo", "r");
+      bytes_read = fread (buffer, 1, sizeof (buffer), fp);
+      fclose (fp);
+
+      do {
+         /* Bail if read failed or if buffer isn't big enough.  */
+         if (bytes_read == 0 || bytes_read == sizeof (buffer)) {
+            //warn("wrong amount of data read");
+            break;
+         }
+
+         /* NUL-terminate the text.  */
+         buffer[bytes_read] = '\0';
+
+         /* Locate the line that starts with "cpu MHz".  */
+         match = strstr (buffer, "Hardware");
+         if (match == NULL) {
+            //warn("no Hardware info in /proc/cpuinfo");
+            break;
+         }
+
+         match = strstr (match, ":");
+         if (match == NULL) {
+            //warn("no ':' after Hardware in /proc/cpuinfo");
+            break;
+         }
+
+         /* Parse the line to extract the BCM information.  */
+         if (strncmp(match, ": BCM2709", 9) != 0) {
+            //warn("'%s' is not ': BCM2709'", match);
+            break;
+         }
+
+         /* Found a version 2 */
+         result = 1;
+      } while(0);
+
+      lastResult = result;
+   }
+
+   return lastResult;
+}
+
 
 // setup a map to a peripheral offset
 // false => error
 static bool create_rw_map(volatile uint32_t **map, int fd, uint32_t offset) {
+	void *m;
 
-	void *m = mmap(0, MAP_SIZE, PROT_READ | PROT_WRITE, MAP_SHARED, fd, BCM_PERIPERALS_ADDRESS + offset);
+	if (isRaspberryPi2()) {
+		warn("Running on Raspberry Pi 2");
+		m = mmap(0, MAP_SIZE, PROT_READ | PROT_WRITE, MAP_SHARED, fd, BCM_PERIPERALS_ADDRESS_RPI2 + offset);
+	} else {
+		warn("Running on Raspberry Pi 1");
+		m = mmap(0, MAP_SIZE, PROT_READ | PROT_WRITE, MAP_SHARED, fd, BCM_PERIPERALS_ADDRESS + offset);
+	}
 
 	*map = (volatile uint32_t *)(m);
 
