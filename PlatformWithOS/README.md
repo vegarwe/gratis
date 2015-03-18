@@ -6,6 +6,48 @@
 * epd_fuse - present EPD as a file for easy control
 
 
+# Prerequisites
+
+The code in this repository is **ONLY VALID** on ePaper modules that are **rev D** and have the **EM027BS013** display mounted.
+To see what your module has, look at the back of it:
+
+![ePaper module](AS12_vs_BS13.png "ePaper markings")
+
+The board in the image above is rev D (as shown in one of the circles) and it is a EM027BS013 display, shown by an X next to the name.
+
+If your board is not rev D or if it is a rev D board with an EM027AS12 mounted, then go to the [product page](http://www.embeddedartists.com/products/displays/lcd_27_epaper.php) and look under **EM027AS012** in the table.
+
+
+## Preparations
+
+The new Raspberry Pi 2 (and possibly the A+ and B+ models as well) come with the option to enable and disable SPI communication. It is off by default. To enable it run the following command:
+
+~~~~~
+sudo raspi-config
+~~~~~
+
+In the dialog that appears, navigate to Advanced Options and then SPI. Select to enable it. The question about loading driver at startup does not matter. Reboot.
+
+## Connecting Raspberry Pi to the ePaper board
+
+### Raspberry Pi 2, A+ and B+ models
+
+The A+, B+ and version 2 models come with 40 gpio pins. You can use a 40-pin ribbon cable and connect part of it like this:
+
+![Raspberry Pi 2](raspberrypi2.png "Raspberry Pi 2")
+![ePaper module](AS12_vs_BS13.png "ePaper markings")
+
+Note that the keying must be as shown in the images for the pins to align correctly.
+
+###  Raspberry Pi A and B models
+
+The A and B models come with 26 gpio pins. You can use a 26-pin ribbon cable and connect it like this:
+
+![Raspberry Pi 1](raspberrypi2.png "Raspberry Pi 1")
+![ePaper module](26_pin_connector.png "ePaper markings")
+
+Note that the keying must be as shown in the images for the pins to align correctly.
+
 ## Compiling
 
 These test programs should compile with no additional libraries, but
