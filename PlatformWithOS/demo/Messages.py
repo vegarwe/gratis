@@ -1,41 +1,59 @@
-# -*- coding: latin-1 -*-
+# -*- coding: utf-8 -*-
 
-# Copyright 2013 Pervasive Displays, Inc.
-#
-# Licensed under the Apache License, Version 2.0 (the "License");
-# you may not use this file except in compliance with the License.
-# You may obtain a copy of the License at:
-#
-#   http:#www.apache.org/licenses/LICENSE-2.0
-#
-# Unless required by applicable law or agreed to in writing,
-# software distributed under the License is distributed on an
-# "AS IS" BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either
-# express or implied.  See the License for the specific language
-# governing permissions and limitations under the License.
-
+import json
+import time
+import urllib2
 from PIL import Image, ImageDraw, ImageFont
 from EPD import EPD
 
+URL   = "http://fjas.no:8181/messages"
 WHITE = 1
 BLACK = 0
+
+fonts = {
+        #36: ImageFont.truetype('/usr/share/fonts/truetype/ttf-dejavu/DejaVuSerif.ttf', 36),
+        36: ImageFont.truetype('/usr/share/fonts/truetype/droid/DroidSerif-Italic.ttf', 36),
+        22: ImageFont.truetype('/usr/share/fonts/truetype/droid/DroidSerif-Italic.ttf', 22),
+        20: ImageFont.truetype('/usr/share/fonts/truetype/droid/DroidSerif-Italic.ttf', 20),
+}
+def getImage(size, messages):
+    image = Image.new('1', size, WHITE)
+    draw = ImageDraw.Draw(image)
+
+    #print 'messages %r' % messages
+    for msg in messages:
+        #print '(%r, %r), %r, %r' % (msg['x'],  msg['y'], msg['text'], msg['fontsize'])
+        draw.text(( msg['x'],  msg['y']), msg['text'], fill=BLACK, font=fonts[msg['fontsize']])
+
+    return image
+
+def listsDifferent(messages, previous_messages):
+    if not len(messages) == len(previous_messages): return True
+    for i in range(len(messages)):
+        if not messages[i]['x'] == previous_messages[i]['x']: return True
+    return False
 
 def main():
     epd = EPD()
     #epd.clear()
-    image = Image.new('1', epd.size, WHITE)
-    draw = ImageDraw.Draw(image)
 
-    font_large   = ImageFont.truetype('/usr/share/fonts/truetype/droid/DroidSerif-Italic.ttf', 36)
-    font_smaller = ImageFont.truetype('/usr/share/fonts/truetype/droid/DroidSerif-Italic.ttf', 22)
-    font_small   = ImageFont.truetype('/usr/share/fonts/truetype/droid/DroidSerif-Regular.ttf', 20)
-    #draw.text(( 20,  20), 'Hei Shnupp!', fill=BLACK, font=font_large)
-    draw.text(( 25,  70), '... glad i deg også!', fill=BLACK, font=font_smaller)
-    #draw.text(( 20, 100), 'deg, du er en knupp!', fill=BLACK, font=font_smaller)
-    #draw.text((155, 130), 'Raiom', fill=BLACK, font=font_small)
+    previous_messages = []
+    while True:
+        try:
+            messages = json.loads(urllib2.urlopen("http://fjas.no:8181/messages").read())
+        except: #urllib2.URLError:
+            time.sleep(3)
+            continue
+        #messages = [ { 'x': 25, 'y': 70, 'text':'hei pÃ¥ deg', 'fontsize': 22 } ]
+        if not listsDifferent(messages, previous_messages):
+            time.sleep(1.300)
+            continue
+        previous_messages = messages
 
-    epd.display(image)
-    epd.update()
+        image = getImage(epd.size, messages)
+
+        epd.display(image)
+        epd.update()
 
 if "__main__" == __name__:
     main()
