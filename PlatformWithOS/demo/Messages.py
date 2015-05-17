@@ -109,7 +109,10 @@ INDEX_HTML = """
 def listsDifferent(messages, previous_messages):
     if not len(messages) == len(previous_messages): return True
     for i in range(len(messages)):
-        if not messages[i]['x'] == previous_messages[i]['x']: return True
+        if not messages[i]       ['x'] == previous_messages[i]['x']: return True
+        if not messages[i]       ['y'] == previous_messages[i]['y']: return True
+        if not messages[i][    'text'] == previous_messages[i]['text']: return True
+        if not messages[i]['fontsize'] == previous_messages[i]['fontsize']: return True
     return False
 
 def main_display():
