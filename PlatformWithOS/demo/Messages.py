@@ -124,14 +124,17 @@ def main_display():
         try:
             messages = json.loads(urllib2.urlopen("http://fjas.no:8181/messages").read())
         except: #urllib2.URLError:
-            time.sleep(3)
+            print "Got problems, sleeping 13s"
+            time.sleep(13)
             continue
         #messages = [ { 'x': 25, 'y': 70, 'text':'hei på deg', 'fontsize': 22 } ]
         if not listsDifferent(messages, previous_messages):
+            print "No change, sleeping 1.3s"
             time.sleep(1.300)
             continue
         previous_messages = messages
 
+        print "Got new message, updating screen"
         image = getImage(epd.size, messages)
 
         epd.display(image)
@@ -146,7 +149,7 @@ def main_server():
     httpd.server_close()
 
 if "__main__" == __name__:
-    if sys.argv[1] == 'server':
+    if len(sys.argv) > 1 and sys.argv[1] == 'server':
         main_server()
     else:
         main_display()
