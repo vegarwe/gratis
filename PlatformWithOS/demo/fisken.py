@@ -9,8 +9,6 @@ from urlparse import urlparse, parse_qs
 from mimetypes import types_map
 from PIL import Image, ImageDraw, ImageFont
 
-script_path = os.path.dirname(os.path.realpath(sys.argv[0]))
-
 WHITE = 1
 BLACK = 0
 
@@ -25,10 +23,10 @@ fonts = {
         20: ImageFont.truetype('/usr/share/fonts/truetype/ttf-dejavu/DejaVuSerif.ttf', 20),
 }
 
-def getImage():
-    image = Image.new('1', (264,176), BLACK)
+def getImage(size, messages):
+    image = Image.new('1', size, WHITE)
     draw = ImageDraw.Draw(image)
-    
+
     #print 'messages %r' % messages
     for msg in messages:
         #print '(%r, %r), %r, %r' % (msg['x'],  msg['y'], msg['text'], msg['fontsize'])
@@ -64,7 +62,7 @@ class MyHandler(BaseHTTPServer.BaseHTTPRequestHandler):
             self.end_headers()
             json.dump(messages, self.wfile)
         elif self.path == '/fisken.png':
-            image = getImage()
+            image = getImage((264,176), messages)
             img_type = 'png'
             self.send_response(200)
             self.send_header('Content-type', types_map['.' + img_type])
