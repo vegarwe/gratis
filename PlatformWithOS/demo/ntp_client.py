@@ -16,6 +16,7 @@ from PIL      import Image, ImageDraw, ImageFont
 from EPD      import EPD
 from optparse import OptionParser
 
+import dateutil.tz
 import datetime
 import socket
 import struct
@@ -116,7 +117,7 @@ class NTPSample(object):
 
 
 def demo(now):
-    epd = EPD('/tmp/epd')
+    epd = EPD('/dev/epd')
     #print('panel = {p:s} {w:d} x {h:d}  version={v:s} COG={g:d}'.format(p=epd.panel, w=epd.width, h=epd.height, v=epd.version, g=epd.cog))
     #epd.clear()
 
@@ -184,6 +185,9 @@ def get_sample(options, args):
     return xmt
 
 def run(options, args):
+    tzfile = dateutil.tz.tzfile('/usr/share/zoneinfo//Europe/Oslo')
+    offset = tzfile.utcoffset(datetime.datetime.now(tzfile))
+
     prev = datetime.datetime.fromtimestamp(0)
     while True:
         now = get_sample(options, args)
@@ -192,7 +196,7 @@ def run(options, args):
             continue
         if now.minute != prev.minute:
             prev = now
-            demo(now)
+            demo(now + offset)
         time.sleep(10)
 
 if __name__ == '__main__':
