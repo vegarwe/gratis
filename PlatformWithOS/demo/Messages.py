@@ -20,9 +20,6 @@ default_messages = [
 messages = default_messages
 
 fonts = {
-        #36: ImageFont.truetype('/usr/share/fonts/truetype/ttf-dejavu/DejaVuSerif.ttf', 36),
-        #22: ImageFont.truetype('/usr/share/fonts/truetype/ttf-dejavu/DejaVuSerif.ttf', 22),
-        #20: ImageFont.truetype('/usr/share/fonts/truetype/ttf-dejavu/DejaVuSerif.ttf', 20),
         36: ImageFont.truetype('/usr/share/fonts/truetype/droid/DroidSerif-Italic.ttf', 36),
         22: ImageFont.truetype('/usr/share/fonts/truetype/droid/DroidSerif-Italic.ttf', 22),
         20: ImageFont.truetype('/usr/share/fonts/truetype/droid/DroidSerif-Italic.ttf', 20),
@@ -53,8 +50,9 @@ class MyHandler(BaseHTTPServer.BaseHTTPRequestHandler):
                 messages = json.loads(qs['messages'][0])
                 for msg in messages:
                     msg['text'] = msg['text'].encode('utf-8')
-            else:
-                messages = default_messages
+            # TODO: Add reset button to go back to default
+            #else:
+            #    messages = default_messages
             self.send_response(200)
             self.send_header("Content-type", "text/html")
             self.end_headers()
